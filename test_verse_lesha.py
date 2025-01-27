@@ -82,17 +82,33 @@ def handle_keys(player_rect):
     speed = 4
 
     if keys[pygame.K_LEFT]:
-        player_rect.x -= speed
+        if player_rect.x <= 80 and (player_rect.y <= 464 or player_rect.y >= 492):
+            pass
+        else:
+            player_rect.x -= speed
         current_player_image = player_images["left"]
+        print(player_rect.x, player_rect.y)
     if keys[pygame.K_RIGHT]:
-        player_rect.x += speed
-        current_player_image = player_images["right"]
+        if player_rect.x >= 820 and (player_rect.y <= 464 or player_rect.y >= 492):
+            pass
+        else:
+            player_rect.x += speed
+            current_player_image = player_images["right"]
+            print(player_rect.x, player_rect.y)
     if keys[pygame.K_UP]:
-        player_rect.y -= speed
-        current_player_image = player_images["up"]
+        if player_rect.y <= 120 and (player_rect.x <= 384 or player_rect.x >= 524):
+            pass
+        else:
+            player_rect.y -= speed
+            current_player_image = player_images["up"]
+            print(player_rect.x, player_rect.y)
     if keys[pygame.K_DOWN]:
-        player_rect.y += speed
-        current_player_image = player_images["down"]
+        if player_rect.y >= 800:
+            pass
+        else:
+            player_rect.y += speed
+            current_player_image = player_images["down"]
+            print(player_rect.x, player_rect.y)
 
 
 background_image = pygame.image.load("sprites/background_1.png").convert_alpha()
