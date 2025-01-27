@@ -95,7 +95,7 @@ def handle_keys(player_rect):
         current_player_image = player_images["down"]
 
 
-background_image = pygame.image.load("sprites/backgrnd_5.png").convert_alpha()
+background_image = pygame.image.load("sprites/background_1.png").convert_alpha()
 
 # --- Основной игровой цикл ---
 def main():
