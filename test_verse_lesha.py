@@ -29,12 +29,6 @@ current_player_image = player_image_front
 player_rect = current_player_image.get_rect()
 player_rect.topleft = (WIDTH // 2, HEIGHT // 2)
 
-# --- Загрузка уровня ---
-def load_level(file):
-    with open(file, 'r') as f:
-        return [line.strip() for line in f]
-
-level = load_level("levels/level1.txt")
 
 # --- Экран входа в игру ---
 def start_screen():
@@ -110,8 +104,6 @@ def handle_keys(player_rect):
             current_player_image = player_images["down"]
             print(player_rect.x, player_rect.y)
     if player_rect.y < 50:
-        # pygame.quit()
-        # sys.exit()
         player_rect.y = 100
         start_screen()
         
@@ -141,16 +133,6 @@ def main():
         screen.blit(resized_arrow, (465, 200))
         screen.blit(arrow_left, (175, 500))
         screen.blit(arrow_rigth, (775, 500))
-        
-
-        
-        # Отрисовка уровня
-        for y, row in enumerate(level):
-            for x, col in enumerate(row):
-                if col == '#':
-                    pygame.draw.rect(screen, (255, 255, 255), (x * 32, y * 32, 32, 32))
-                elif col == 'E':
-                    pygame.draw.rect(screen, (255, 0, 0), (x * 32, y * 32, 32, 32))
 
         # Отрисовка игрока
         screen.blit(current_player_image, player_rect)
