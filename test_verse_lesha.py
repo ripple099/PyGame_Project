@@ -96,22 +96,32 @@ def handle_keys(player_rect):
             current_player_image = player_images["right"]
             print(player_rect.x, player_rect.y)
     if keys[pygame.K_UP]:
-        if player_rect.y <= 120 and (player_rect.x <= 384 or player_rect.x >= 524):
+        if (player_rect.y <= 120 and (player_rect.x <= 384 or player_rect.x >= 524)) or player_rect.x < 75 or player_rect.x > 820:
             pass
         else:
             player_rect.y -= speed
             current_player_image = player_images["up"]
             print(player_rect.x, player_rect.y)
     if keys[pygame.K_DOWN]:
-        if player_rect.y >= 800:
+        if player_rect.y >= 800 or player_rect.x < 75 or player_rect.x > 820:
             pass
         else:
             player_rect.y += speed
             current_player_image = player_images["down"]
             print(player_rect.x, player_rect.y)
+    if player_rect.y < 50:
+        # pygame.quit()
+        # sys.exit()
+        player_rect.y = 100
+        start_screen()
+        
 
 
 background_image = pygame.image.load("sprites/background_1.png").convert_alpha()
+sign = pygame.image.load('sprites/arrow.png')
+resized_arrow = pygame.transform.scale(sign, (100, 100))
+arrow_rigth = pygame.transform.rotate(resized_arrow, -90)
+arrow_left = pygame.transform.rotate(resized_arrow, 90)
 
 # --- Основной игровой цикл ---
 def main():
@@ -128,6 +138,11 @@ def main():
 
         # Отрисовка фона
         screen.blit(background_image, (0, 0))
+        screen.blit(resized_arrow, (465, 200))
+        screen.blit(arrow_left, (175, 500))
+        screen.blit(arrow_rigth, (775, 500))
+        
+
         
         # Отрисовка уровня
         for y, row in enumerate(level):
