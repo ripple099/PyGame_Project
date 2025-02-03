@@ -1,5 +1,5 @@
 import pygame
-from first_room import game_loop
+from story import opening
 from start_window import start_screen
 
 # --- Инициализация Pygame ---
@@ -13,4 +13,4 @@ if __name__ == "__main__":
     while True:
         state = start_screen()
         if state == "game":
-            game_loop()
+            opening()
