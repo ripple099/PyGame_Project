@@ -70,47 +70,41 @@ def start_screen():
                         sys.exit()
 
 # --- Управление персонажем ---
-def handle_keys(player_rect):
+def handle_keys(player_rect, scene):
     global current_player_image
     keys = pygame.key.get_pressed()
     speed = 4
 
     if keys[pygame.K_LEFT]:
-        if player_rect.x <= 80 and (player_rect.y <= 464 or player_rect.y >= 492):
+        if (player_rect.x <= 80 and (player_rect.y <= 464 or player_rect.y >= 492)) and scene == 1:
             pass
         else:
             player_rect.x -= speed
         current_player_image = player_images["left"]
-        print(player_rect.x, player_rect.y)
     if keys[pygame.K_RIGHT]:
-        if player_rect.x >= 820 and (player_rect.y <= 464 or player_rect.y >= 492):
+        if (player_rect.x >= 820 and (player_rect.y <= 464 or player_rect.y >= 492)) and scene == 1:
             pass
         else:
             player_rect.x += speed
             current_player_image = player_images["right"]
-            print(player_rect.x, player_rect.y)
-    if keys[pygame.K_UP]:
-        if (player_rect.y <= 120 and (player_rect.x <= 384 or player_rect.x >= 524)) or player_rect.x < 75 or player_rect.x > 820:
-            pass
-        else:
-            player_rect.y -= speed
-            current_player_image = player_images["up"]
-            print(player_rect.x, player_rect.y)
     if keys[pygame.K_DOWN]:
-        if player_rect.y >= 800 or player_rect.x < 75 or player_rect.x > 820:
+        if (player_rect.y >= 800 or player_rect.x < 75 or player_rect.x > 824) and scene == 1:
             pass
         else:
             player_rect.y += speed
             current_player_image = player_images["down"]
-            print(player_rect.x, player_rect.y)
-    if player_rect.y < 50:
-        player_rect.y = 100
-        start_screen()
+    if keys[pygame.K_UP]:
+        if ((player_rect.y <= 120 and (player_rect.x <= 384 or player_rect.x >= 524)) or player_rect.x < 75 or player_rect.x > 824) and scene == 1:
+            pass
+        else:
+            player_rect.y -= speed
+            current_player_image = player_images["up"]
+
         
 
 
 background_image = pygame.image.load("sprites/background_1.png").convert_alpha()
-sign = pygame.image.load('sprites/arrow.png')
+sign = pygame.image.load('sprites/arrow.jpg')
 resized_arrow = pygame.transform.scale(sign, (100, 100))
 arrow_rigth = pygame.transform.rotate(resized_arrow, -90)
 arrow_left = pygame.transform.rotate(resized_arrow, 90)
@@ -118,14 +112,15 @@ arrow_left = pygame.transform.rotate(resized_arrow, 90)
 # --- Основной игровой цикл ---
 def main():
     start_screen()
+    scene = 1
     running = True
-    
+    keys = pygame.key.get_pressed()
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-        handle_keys(player_rect)
+        handle_keys(player_rect, scene)
         screen.fill((0, 0, 0))  # Очистка экрана
 
         # Отрисовка фона
@@ -139,9 +134,97 @@ def main():
 
         pygame.display.flip()
         clock.tick(FPS)
+        if player_rect.y < 50:
+            player_rect.y = 100
+            player_rect.x = 100
+            second_room()
+        if player_rect.x < 0:
+            player_rect.y = 100
+            player_rect.x = 100
+            third_room()
+        if player_rect.x > 1024:
+            player_rect.y = 100
+            player_rect.x = 100
+            forth_room()
+    pygame.quit()
+    sys.exit()
+
+def second_room():
+    background_image = pygame.image.load("sprites/backgrnd_5.png").convert_alpha()
+    title_font = pygame.font.Font(None, 64)
+    title_text = title_font.render("Л", True, (255, 255, 255))
+    scene = 2
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        handle_keys(player_rect, scene)
+        screen.fill((0, 0, 0))
+        screen.blit(background_image, (0, 0))
+
+
+        # Отрисовка игрока
+        screen.blit(current_player_image, player_rect)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
+
+        pygame.display.flip()
+        clock.tick(FPS)
     
     pygame.quit()
     sys.exit()
 
+def third_room():
+    background_image = pygame.image.load("sprites/backgrnd_5.png").convert_alpha()
+    title_font = pygame.font.Font(None, 64)
+    title_text = title_font.render("О", True, (255, 255, 255))
+    scene = 2
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        handle_keys(player_rect, scene)
+        screen.fill((0, 0, 0))
+        screen.blit(background_image, (0, 0))
+
+
+        # Отрисовка игрока
+        screen.blit(current_player_image, player_rect)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
+
+        pygame.display.flip()
+        clock.tick(FPS)
+    
+    pygame.quit()
+    sys.exit()
+
+def forth_room():
+    background_image = pygame.image.load("sprites/backgrnd_5.png").convert_alpha()
+    title_font = pygame.font.Font(None, 64)
+    title_text = title_font.render("Х", True, (255, 255, 255))
+    scene = 2
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        handle_keys(player_rect, scene)
+        screen.fill((0, 0, 0))
+        screen.blit(background_image, (0, 0))
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 4))
+
+
+        # Отрисовка игрока
+        screen.blit(current_player_image, player_rect)
+
+        pygame.display.flip()
+        clock.tick(FPS)
+    
+    pygame.quit()
+    sys.exit()
 if __name__ == "__main__":
     main()
