@@ -80,7 +80,7 @@ def opening():
 
     # Основной цикл
     pygame.mixer.music.play()
-    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.set_volume(0.25)
 
     running = True
     while running:
