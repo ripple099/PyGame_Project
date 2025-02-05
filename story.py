@@ -91,6 +91,11 @@ def opening():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
+                if event.key == K_SPACE:  # Обработка нажатия пробела
+                    # Пропускаем весь текст и запускаем переход
+                    fade_state = 1
+                    text_displayed = True
+                    current_text_index = len(texts) - 1  # Переход к последнему тексту
 
         # Очистка экрана
         screen.fill((0, 0, 0))
