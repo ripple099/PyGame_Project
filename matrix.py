@@ -1,3 +1,5 @@
+import pygame
+
 font = pygame.font.SysFont('Consolas', 20)
 text_color = pygame.Color('green')
 text_symbols = ['0', '1']
