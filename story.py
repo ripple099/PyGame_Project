@@ -80,7 +80,7 @@ def opening():
 
     # Основной цикл
     pygame.mixer.music.play()
-    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.set_volume(0.25)
 
     running = True
     while running:
@@ -91,6 +91,11 @@ def opening():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
+                if event.key == K_SPACE:  # Обработка нажатия пробела
+                    # Пропускаем весь текст и запускаем переход
+                    fade_state = 1
+                    text_displayed = True
+                    current_text_index = len(texts) - 1  # Переход к последнему тексту
 
         # Очистка экрана
         screen.fill((0, 0, 0))

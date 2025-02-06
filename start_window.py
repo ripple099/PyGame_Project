@@ -6,7 +6,7 @@ def start_screen():
     title_font = pygame.font.Font(None, 64)
     menu_font = pygame.font.Font(None, 36)
     title_text = title_font.render("Lost in Memory", True, (255, 255, 255))
-    options = ["начать", "хз_чо", "выход"]
+    options = ["начать", "", "выход"]
     selected = 0
 
     while True:
@@ -35,3 +35,5 @@ def start_screen():
                     if options[selected] == "выход":
                         pygame.quit()
                         sys.exit()
+                    if options[selected] == "хз_чо":
+                        pass
