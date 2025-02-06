@@ -7,7 +7,7 @@ import pytmx
 
 def game_loop():
     # Загрузка карты
-    tmx_data = pytmx.load_pygame("maps/map.tmx")
+    tmx_data = pytmx.load_pygame("pygame_map/map.tmx")
     TILE_SIZE = tmx_data.tilewidth
 
     # Игрок
