@@ -64,7 +64,7 @@ def opening():
         num_lines = len(aligned_text.split("\n"))
         max_line_length = max(len(line) for line in aligned_text.split("\n"))
         
-        y = HEIGHT//2 - (num_lines * letter_height)//2
+        y = HEIGHT//2 - (num_lines * letter_height)//2 + 100
         x = WIDTH//2 - (max_line_length * letter_width)//2
         return x, y, aligned_text
 
@@ -81,6 +81,7 @@ def opening():
     # Основной цикл
     pygame.mixer.music.play()
     pygame.mixer.music.set_volume(0.25)
+
 
     running = True
     while running:
@@ -160,7 +161,9 @@ def opening():
         if fade_state == 2 and not level_loaded:
             pygame.mixer.music.fadeout(1)
             # Здесь вызываем функцию загрузки уровня
-            game_loop()  # Ваша функция для загрузки уровня
+            game_loop(1850, 2300)  # Ваша функция для загрузки уровня
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
             level_loaded = True
             running = False  # Закрываем текущее окно
 
@@ -170,7 +173,4 @@ def opening():
 
     pygame.quit()
     sys.exit()
-    # pygame.event.wait()
 
-
-# def prolog():
