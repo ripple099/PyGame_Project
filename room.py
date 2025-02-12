@@ -3,6 +3,7 @@ import pygame
 import sys
 import pygame
 import pytmx
+from test_verse_lesha import first_minigame
 
 
 def game_loop():
@@ -47,6 +48,8 @@ def game_loop():
     global current_player_image
     running = True
     while running:
+        if player_x == 174 and player_y == 1200:
+            first_minigame()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

@@ -57,13 +57,14 @@ def start_screen():
 
 background_image = pygame.image.load("sprites/background_1.png").convert_alpha()
 # --- Основной игровой цикл ---
-def main():
-    start_screen()
+def main(f, ply, k):
+    if f == 0:
+        start_screen()
     scene = 1
     running = True
     keys = pygame.key.get_pressed()
     player_x = 500
-    player_y = 400
+    player_y = ply
     player_speed = 5
     camera_x = 0
     camera_y = 0
@@ -138,7 +139,7 @@ def main():
 
 def first_minigame():
     surface = pygame.display.set_mode((1024, 1024))
-    running = True
+    running = 1
     player_speed = 5
     hero_y = HEIGHT // 2
     hero_x = 100
@@ -148,31 +149,30 @@ def first_minigame():
     pygame.time.set_timer(timer_event , timer_interval)
     hp = pygame.image.load("sprites/hp.png").convert_alpha()
     hpt = pygame.transform.rotozoom(hp, 0, 0.05)
+    hpcrush = pygame.image.load("sprites/hpc.png").convert_alpha()
+    hptcrush = pygame.transform.rotozoom(hpcrush, 0, 0.3)
     hero = pygame.image.load("sprites/geni_right.png").convert_alpha()
+    enemy = pygame.image.load("sprites/geni_left.png").convert_alpha()
     bullet = pygame.image.load('sprites/arrow.png')
     bulletp = pygame.transform.rotozoom(bullet, -90, 0.1)
     enemy_b = pygame.transform.rotozoom(bullet, 90, 0.1)
+    enemy_d = pygame.transform.rotozoom(enemy, -90, 1)
     drawing = 0
     draw2 = 0
     bullets = []
     bullets_enemy = []
-    my_hp = [1, 1, 1, 1, 1]
-    enemy_hp = [1, 1, 1, 1, 1]
-    enemy_hp_x = 100
-    hp_y = 300
-    damage = 0
-    me_damage = 0
+    my_hp = 2
+    enemy_hp = 2
     a = (HEIGHT // 2)
-
     while running:
-        
         surface.fill((0, 0, 0))
+        surface.blit(background_image, (0, 0))
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN: 
-                if event.key == pygame.K_e: 
+                if event.key == pygame.K_e:
                     drawing = 1
                     sx, sy = 0, 0
                     bullets.append([100, hero_y, sx, sy])
@@ -187,41 +187,104 @@ def first_minigame():
         if keys[pygame.K_DOWN]:
             hero_y += player_speed
         if drawing:
-            # tick = clock.tick(60)
             for i in range(len(bullets) - 1):
                 bullets[i][2] += 200 * tick / 1000
                 s2 = bullets[i][0] + bullets[i][2]
-                surface.blit(bulletp, (s2, bullets[i][1]))
+                screen.blit(bulletp, (s2, bullets[i][1]))
                 if s2 > 1500:
                     del bullets[i]
-                if s2 > 800 and s2 < 928 and bullets[i][1] > a and bullets[i][1] < a + 128:
-                    damage = 1
+                if s2 > 800 and s2 < 804 and bullets[i][1] > a and bullets[i][1] < a + 128:
+                    enemy_hp -= 1
         if draw2:
             for i in range(len(bullets_enemy) - 1):
                 bullets_enemy[i][2] -= 200 * tick / 1000
                 se2 = bullets_enemy[i][0] + bullets_enemy[i][2]
-                surface.blit(enemy_b, (se2, bullets_enemy[i][1]))
+                screen.blit(enemy_b, (se2, bullets_enemy[i][1]))
                 if se2 < 0:
                     del bullets_enemy[i]
-                if se2 > hero_x and se2 < hero_x + 128 and bullets_enemy[i][1] > hero_y and bullets_enemy[i][1] < hero_y + 128:
-                    me_damage = 1
-        for j in range(len(enemy_hp)):
-            if enemy_hp[j] == 1:
-                enemy_hp_x += 50
-                surface.blit(hpt, (enemy_hp_x, hp_y))
-                
-        # if random.randint
-        surface.blit(hero, (800, a))
+                if se2 >= hero_x and se2 <= hero_x + 4 and bullets_enemy[i][1] >= hero_y and bullets_enemy[i][1] <= hero_y + 128:
+                    my_hp -= 1
+        if my_hp > 0:
+            surface.blit(hpt, (hero_x, 150))
+            title_font = pygame.font.Font(None, 36)
+            title_text = title_font.render(str(my_hp), True, (255, 255, 255))
+            surface.blit(title_text, (hero_x - 30, 150))
+        else:
+            surface.blit(hptcrush, (hero_x, 150))
+            drawing = 0
+            you_lose()        
+        if enemy_hp > 0:
+            surface.blit(hpt, (700, 150))
+            title_font = pygame.font.Font(None, 36)
+            title_text = title_font.render(str(enemy_hp), True, (255, 255, 255))
+            surface.blit(title_text, (700 - 30, 150))
+        else:
+            surface.blit(hptcrush, (600, 100))
+            draw2 = 0
+            a = HEIGHT // 2
+            enemy = enemy_d
+            you_win()
+            
+
+        surface.blit(enemy, (800, a))
         surface.blit(hero, (hero_x, hero_y))
+        pygame.display.flip()
+    pygame.quit()
+    sys.exit()
+# (WIDTH // 2 - 300, HEIGHT // 2 - 300, 600, 600)
+
+def you_win():
+    shape_surf = pygame.Surface(pygame.Rect((0, 0, WIDTH, HEIGHT)).size, pygame.SRCALPHA)
+    pygame.draw.rect(shape_surf, (0, 0, 0, 240), shape_surf.get_rect())
+    title_font = pygame.font.Font(None, 62)
+    title_font1 = pygame.font.Font(None, 48)
+    title_text = title_font.render('YOU WIN', True, (255, 255, 255))
+    title_ok = title_font1.render('OK', True, (255, 255, 255))
+    screen.blit(shape_surf, (0, 0, WIDTH, HEIGHT))
+    screen.blit(title_text, (1024 // 2 - 100, 1024 // 4))
+    screen.blit(title_ok, (1024 // 2 - 25, 1024 // 2))
+    running = 1
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_RETURN: 
+                    main(1, ply=500, k=1)
+                    running = 0
+
         pygame.display.flip()
     pygame.quit()
     sys.exit()
 
 
-        
-
+def you_lose():
+    shape_surf = pygame.Surface(pygame.Rect((0, 0, WIDTH, HEIGHT)).size, pygame.SRCALPHA)
+    pygame.draw.rect(shape_surf, (0, 0, 0, 240), shape_surf.get_rect())
+    title_font = pygame.font.Font(None, 62)
+    title_font1 = pygame.font.Font(None, 48)
+    title_text = title_font.render('YOU LOSE', True, (255, 255, 255))
+    title_ok = title_font1.render('RETURN', True, (255, 255, 255))
+    screen.blit(shape_surf, (0, 0, WIDTH, HEIGHT))
+    screen.blit(title_text, (1024 // 2 - 100, 1024 // 4))
+    screen.blit(title_ok, (1024 // 2 - 55, 1024 // 2))
+    running = 1
+    while running:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_RETURN: 
+                    main(1, ply = 40)
+                    pygame.quit()
+                    sys.exit()
+        pygame.display.flip()
+    pygame.quit()
+    sys.exit()
 
 if __name__ == "__main__":
-    main()
+    main(0, ply=400)
 import datetime
 
