@@ -64,7 +64,7 @@ def opening():
         num_lines = len(aligned_text.split("\n"))
         max_line_length = max(len(line) for line in aligned_text.split("\n"))
         
-        y = HEIGHT//2 - (num_lines * letter_height)//2 + 100
+        y = HEIGHT//2 - (num_lines * letter_height)//2
         x = WIDTH//2 - (max_line_length * letter_width)//2
         return x, y, aligned_text
 
