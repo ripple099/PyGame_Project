@@ -41,7 +41,7 @@ def run_dialog():
         screen.fill((30, 30, 30))
 
         # Отображение текста NPC
-        npc_surface = pygame.font.Font(None, 64).render(npc_question, True, (255, 255, 255))
+        npc_surface = pygame.font.Font(None, 36).render(npc_question, True, (255, 255, 255))
         screen.blit(npc_surface, (100, 100))
 
         # Отображение ответа NPC (если есть)
