@@ -82,6 +82,7 @@ def opening():
     pygame.mixer.music.play()
     pygame.mixer.music.set_volume(0.25)
 
+
     running = True
     while running:
         # Обработка событий
@@ -160,7 +161,9 @@ def opening():
         if fade_state == 2 and not level_loaded:
             pygame.mixer.music.fadeout(1)
             # Здесь вызываем функцию загрузки уровня
-            game_loop()  # Ваша функция для загрузки уровня
+            game_loop(1850, 2300)  # Ваша функция для загрузки уровня
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
             level_loaded = True
             running = False  # Закрываем текущее окно
 
@@ -170,7 +173,4 @@ def opening():
 
     pygame.quit()
     sys.exit()
-    # pygame.event.wait()
 
-
-# def prolog():

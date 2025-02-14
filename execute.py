@@ -8,7 +8,6 @@ pygame.display.set_caption("Lost in Memory")
 icon = pygame.image.load('sprites/icon.jpeg')
 pygame.display.set_icon(icon)
 
-
 if __name__ == "__main__":
     while True:
         state = start_screen()

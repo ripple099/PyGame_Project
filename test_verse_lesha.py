@@ -1,7 +1,7 @@
 import pygame
 import sys
 import random
-import time
+# from path_to_func_gl import best_func
 # --- Настройки ---
 WIDTH = 1024
 HEIGHT = 1024
@@ -170,7 +170,7 @@ def first_minigame():
     bullets = []
     bullets_enemy = []
     my_hp = 2
-    enemy_hp = 2
+    enemy_hp = 10
     a = (HEIGHT // 2)
     while running:
         surface.fill((0, 0, 0))
@@ -260,6 +260,7 @@ def you_win():
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN: 
                     main(1, ply=500)
+                    main(1, 52)
                     running = 0
 
         pygame.display.flip()
@@ -285,7 +286,7 @@ def you_lose():
                 running = False
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN: 
-                    main(1, ply = 40)
+                    main(1, 40)
                     pygame.quit()
                     sys.exit()
         pygame.display.flip()
