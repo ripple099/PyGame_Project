@@ -9,6 +9,10 @@ FPS = 60
 VIEWPORT_WIDTH = 500  # Окно просмотра мира (уменьшено в 2 раза)
 VIEWPORT_HEIGHT = 400
 # --- Инициализация Pygame ---
+k = 0
+a = 0
+t = 0
+e = 0
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Lost in Memory")
@@ -131,6 +135,10 @@ def main(f, ply):
             first_minigame()
             pygame.quit()
             sys.exit()
+        if player_x < 50:
+            second_minigame()
+            pygame.quit()
+            sys.exit()
 
         pygame.display.flip()
     pygame.quit()
@@ -251,6 +259,7 @@ def you_win():
                 running = False
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN: 
+                    main(1, ply=500)
                     main(1, 52)
                     running = 0
 
@@ -284,7 +293,22 @@ def you_lose():
     pygame.quit()
     sys.exit()
 
+def second_minigame():
+    rect = pygame.Rect(50, 50, 200, 100)
+    surface = pygame.display.set_mode((1024, 1024))
+    pygame.draw.rect(surface, (255, 0, 0), rect)
+    running = 1
+    tochka = 500, 500
+    while running:
+        surface.fill((0, 0, 0))
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                running = False
+        pygame.display.flip()
+    pygame.quit()
+    sys.exit()
+
 if __name__ == "__main__":
     main(0, ply=400)
-import datetime
 
