@@ -9,7 +9,7 @@ from sprites import *
 import pygame
 import sys
 import pytmx
-import random
+# import random
 
 # Константы
 SCALE = 2

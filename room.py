@@ -1,10 +1,8 @@
 from sprites import *
-import pygame
 import sys
 import pygame
 import pytmx
 from final_window import show_credits
-# from test_verse_lesha import first_minigame
 import random
 
 pygame.init()
