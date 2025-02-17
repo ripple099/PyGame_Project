@@ -172,6 +172,7 @@ def first_minigame():
     my_hp = 2
     enemy_hp = 10
     a = (HEIGHT // 2)
+    bullets_fire = 0
     while running:
         surface.fill((0, 0, 0))
         surface.blit(background_image, (0, 0))
@@ -183,6 +184,7 @@ def first_minigame():
                 if event.key == pygame.K_e:
                     drawing = 1
                     sx, sy = 0, 0
+                    bullets_fire += 1
                     bullets.append([100, hero_y, sx, sy])
             if event.type == timer_event:
                 a = random.randint(50, 850)  
@@ -231,7 +233,7 @@ def first_minigame():
             draw2 = 0
             a = HEIGHT // 2
             enemy = enemy_d
-            you_win()
+            you_win(bullets_fire)
             
 
         surface.blit(enemy, (800, a))
@@ -241,13 +243,14 @@ def first_minigame():
     sys.exit()
 # (WIDTH // 2 - 300, HEIGHT // 2 - 300, 600, 600)
 
-def you_win():
+def you_win(fire):
     shape_surf = pygame.Surface(pygame.Rect((0, 0, WIDTH, HEIGHT)).size, pygame.SRCALPHA)
     pygame.draw.rect(shape_surf, (0, 0, 0, 240), shape_surf.get_rect())
     title_font = pygame.font.Font(None, 62)
     title_font1 = pygame.font.Font(None, 48)
     title_text = title_font.render('YOU WIN', True, (255, 255, 255))
     title_ok = title_font1.render('OK', True, (255, 255, 255))
+    title_t = title_font1.render(fire, True, (255, 255, 255))
     screen.blit(shape_surf, (0, 0, WIDTH, HEIGHT))
     screen.blit(title_text, (1024 // 2 - 100, 1024 // 4))
     screen.blit(title_ok, (1024 // 2 - 25, 1024 // 2))
