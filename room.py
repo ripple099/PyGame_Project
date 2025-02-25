@@ -1,10 +1,8 @@
 from sprites import *
-import pygame
 import sys
 import pygame
 import pytmx
 from final_window import show_credits
-# from test_verse_lesha import first_minigame
 import random
 
 pygame.init()
@@ -87,13 +85,15 @@ def run_dialog():
 
 def first_minigame():
     surface = pygame.display.set_mode((1024, 1024))
-    background_image = pygame.image.load("sprites/background_1.png").convert()
+    background_image = pygame.image.load("sprites/jungle.png").convert()
+    background_image = pygame.transform.scale(background_image, (1024,1024))
     hp = pygame.image.load("sprites/hp.png").convert_alpha()
     hpt = pygame.transform.rotozoom(hp, 0, 0.05)
     hpcrush = pygame.image.load("sprites/hpc.png").convert_alpha()
     hptcrush = pygame.transform.rotozoom(hpcrush, 0, 0.3)
     hero = pygame.image.load("sprites/geni_right.png").convert_alpha()
-    enemy = pygame.image.load("sprites/geni_left.png").convert_alpha()
+    enemy = pygame.image.load("sprites/enemy.png").convert_alpha()
+    enemy = pygame.transform.scale(enemy, (128,128))
     bullet_img = pygame.image.load('sprites/arrow.png')
     bulletp = pygame.transform.rotozoom(bullet_img, -90, 0.1)
     enemy_b = pygame.transform.rotozoom(bullet_img, 90, 0.1)
@@ -230,7 +230,7 @@ def you_lose():
                 running = False
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN: 
-                    first_minigame(430, 2338)
+                    first_minigame()
                     pygame.quit()
                     sys.exit()
         pygame.display.flip()
@@ -248,6 +248,8 @@ def game_loop(x, y):
     #portals
     ANIMATION_EVENT = pygame.USEREVENT + 1
     pygame.time.set_timer(ANIMATION_EVENT, 100)
+    toilet = pygame.image.load("sprites/door.jpg").convert_alpha()
+    toilet = pygame.transform.scale(toilet, (75,75))
     portal1 = pygame.image.load("sprites/portal1.png").convert_alpha()
     portal1 = pygame.transform.scale(portal1, (40, 65))
     portal2 = pygame.image.load("sprites/portal2.png").convert_alpha()
@@ -260,7 +262,7 @@ def game_loop(x, y):
     portal5 = pygame.transform.scale(portal5, (40, 65))
     portal_frames = [portal1, portal2, portal3, portal4, portal5]
     for i in range(len(portal_frames)):
-        portal_frames[i].set_colorkey((255, 255, 255))  # Убираем белый цвет (если фон белый)
+        portal_frames[i].set_colorkey((255, 255, 255))
 
     #ghoul
     npc1 = pygame.image.load("sprites/ghoul.png").convert_alpha()
@@ -372,6 +374,7 @@ def game_loop(x, y):
 
         # Отрисовка игрока
         print(player_x, player_y)
+        screen.blit(toilet, (3705 - camera_x, 2135 - camera_y))
         screen.blit(end_img, (2498 - camera_x, 2244 - camera_y))
         screen.blit(npc1, (2590 - camera_x, 850 - camera_y))
         screen.blit(current_player_image, (player_x - camera_x, player_y - camera_y))

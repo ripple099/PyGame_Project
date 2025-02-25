@@ -79,7 +79,7 @@ def opening():
     level_loaded = False
 
     # Основной цикл
-    pygame.mixer.music.play()
+    pygame.mixer.music.play(start=65)
     pygame.mixer.music.set_volume(0.25)
 
 
